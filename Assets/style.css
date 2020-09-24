@@ -1,0 +1,47 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    /* font-family: */
+}
+
+body {
+    padding: 10%;
+}
+
+section {
+    margin:0;
+    padding:0;
+}
+
+h1 {
+    margin-bottom: 25px;
+}
+
+h2 {
+    margin-bottom: 50px;
+}
+
+.hide {
+    display: none;
+    position: relative;
+    bottom: -500px;
+    left: -500px;
+}
+
+.test {
+    padding-right: 2px;
+    padding-left: 2px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#judge {
+    margin-top: 50px;
+    font-size: 20px;
+    color: #E5E3E3;
+    text-decoration: underline;
+}
