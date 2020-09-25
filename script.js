@@ -9,92 +9,98 @@
 //Go through array, create whichever it is, then save which number it is. So when they click on it. You're storing users's answers //
 
 
-var startButton = document.getElementById("start-btn").addEventListener("click", startQuiz);
+var startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
 //Click registering in window and not on button. 
-var timerEl = document.getElementById("timer");
-var introEl = document.getElementById("introContainer");
-var questionContainerEl = document.getElementById("questionContainer");
-var questionEl = document.getElementById("question"); 
-var answer1 = document.getElementById("answer-btn-1");
-var answer2 = document.getElementById("answer-btn-2");
-var answer3 = document.getElementById("answer-btn-3");
-var answer4 = document.getElementById("answer-btn-4");
+var timerEl = document.querySelector("#timer");
+var introEl = document.querySelector("#introContainer");
+var questionContainerEl = document.querySelector("#questionContainer");
+var questionEl = document.querySelector("#question"); 
+var answerbtnEl = document.querySelectorAll(".answer-btn");
 
-// let shuffledQuestions, currentQuestionIndex;
-currentQuestionIndex = 0;
+var currentQuestionIndex = 0;
+var quizComplete = false;
 
 var questionsArr = [
     {
         question: "What does 'HTML' stand for?",
         answers: [
-            {text: "Human Typed Markup Language", correct: false},
-            {text: "Hypertime Markup Language", correct: false},
-            {text: "Hypertext Markup Language", correct: true},
-            {text: "Huge Toes Make Laughs", correct: false}
-        ]
+            "Human Typed Markup Language", 
+            "Hypertime Markup Language", 
+            "Hypertext Markup Language", 
+            "Huge Toes Make Laughs"
+        ],
+        correct: "Hypertext Markup Language"
     },
     {
         question: "Which language is primarily used to control the aesthetics of a webpage?",
         answers: [
-            {text: "HTML", correct: false},
-            {text: "JavaScript", correct: false},
-            {text: "Python", correct: false},
-            {text: "CSS", correct: true}
-        ]
+            "HTML", 
+            "JavaScript", 
+            "Python", 
+            "CSS"
+        ],
+        correct: "CSS"
     },  
     {
         question: "Which of the following HTML tags is the ancestor of meta tags in an HTML file?",
         answers: [
-            {text: "<head></head>", correct: true},
-            {text: "<header></header>", correct: false},
-            {text: "<h1></h1>", correct:false},
-            {text: "<hr></hr>", correc: false}
-        ]
+            "<head></head>", 
+            "<header></header>",
+            "<h1></h1>", 
+            "<hr></hr>"
+        ],
+        correct: "<head></head>"
     },
     {
         question: "What is the z-index property used for in CSS?",
         answers: [
-            {text: "Fixing elements to specified coordinates in the browser window", correct: false},
-            {text: "Positioning elements relative to their ancestors", correct: false},
-            {text: "Resetting elements to their default browser position", correct: false},
-            {text: "Layering elements on top of each other", correct: true}
-        ]
+            "Fixing elements to specified coordinates in the browser window", 
+            "Positioning elements relative to their ancestors", 
+            "Resetting elements to their default browser position", 
+            "Layering elements on top of each other"
+        ],
+        correct: "Layering elements on top of each other"
+
     },
     {
         question: "What is the Chrome Inspector used for?",
         answers: [
-            {text: "Debugging code", correct: false},
-            {text: "Testing out different CSS style rules", correct: false},
-            {text: "Temporarily changing text content on a webpage", correct: false},
-            {text: "All of the above", correct: true}
-        ]
+            "Debugging code", 
+            "Testing out different CSS style rules", 
+            "Temporarily changing text content on a webpage",
+            "All of the above"
+        ],
+        correct: "All of the above"
     },
     {
         question: "What is Bootstrap?",
         answers: [
-            {text: "A JavaScript library", correct: false},
-            {text: "A CSS framework", correct: true},
-            {text: "A scripting language", correct: false},
-            {text: "None of the above", correct: false}
-        ]
+            "A JavaScript library", 
+            "A CSS framework", 
+            "A scripting language", 
+            "None of the above"
+        ],
+        correct: "A JavaScript library"
     },
     {
         question: "Which of these data types is a Boolean?",
         answers: [
-            {text: "True", correct: true},
-            {text: "3.14", correct: false},
-            {text: "Red", correct: false},
-            {text: "67%", correct: false}
-        ]
+            "True", 
+            "3.14", 
+            "Red",
+            "67%"
+        ],
+        correct: "True"
     },
     {
         question: "How do you enclose an array in JavaScript?",
         answers: [
-            {text: "{}", correct: false},
-            {text: "()", correct: false},
-            {text: "[]", correct: true},
-            {text: "||", correct: false}
-        ]
+            "{}", 
+            "()",
+            "[]", 
+            "||", 
+        ],
+        correct: "[]",
     }
 ]
 
@@ -110,6 +116,7 @@ function setTimer() {
     
     if (timeLeft === 0) {
         //Function to open up the Highscores page
+        timeLeft = 0;
         clearInterval(timeInterval);
     }   
     }, 1000);
@@ -124,27 +131,32 @@ function startQuiz() {
 
     introEl.classList.add("hide");
     questionContainerEl.classList.remove("hide");
-    // currentQuestionIndex = 0;
-    initialQuestion();
+    setQuestion();
 }
 
 
-//Try renaming your buttons to have the same name, query selector all, and then turning that into an array too append to - https://www.youtube.com/watch?v=hDN5IGUv3Yw - 7:58
-function initialQuestion() {
-    for (let i = 0; i < questionsArr.length; i++){
-    questionEl.innerHTML = questionsArr[i].question;
-    answer1.innerHTML = questionsArr[i].answers.text[i];
-    answer2.innerHTML = questionsArr[i].answers.text[i];
-    answer3.innerHTML = questionsArr[i].answers.text[i];
-    answer4.innerHTML = questionsArr[i].answers.text[i];
+//Try renaming your buttons to have the same name, query selector all, and then turning that into an array too append to - https://www.youtube.com/watch?v=hDN5IGUv3Yw - 7:58. Create a question index variable to count the question and then create a formula that listens for button clicks, throws up the coorrect or wrong, and changes the content of the question. 
+
+currentQuestionIndex = 0;
+
+function setQuestion() {
+    //Populating question
+    for (let i = 0; i < questionsArr.length; i++) {
+        questionEl.textContent = questionsArr[currentQuestionIndex].question;
+
+        for(let j = 0; j < questionsArr[currentQuestionIndex].answers.length; j++) {
+        answerbtnEl[j].textContent = questionsArr[currentQuestionIndex].answers[j];
+        }
     }
 }
 
-function selectAnswer() {
+$(answerbtnEl).click(selectAnswer)
 
-
+function selectAnswer(event) {
+    if ($(event.target).text() === questionsArr[currentQuestionIndex].correct) {
+        console.log("correct");
+    }
 }
-
 
 // var currentQuestion = 0; //Which question is it. 
 
@@ -167,3 +179,8 @@ function selectAnswer() {
 // You only want to loop through this once. Maybe creating a global variable to count. 
 // create a varaible that stores the user's answer to reference back 
 //Go through array, create whichever it is, then save which number it is. So when they click on it. You're storing users's answers
+
+
+
+
+
