@@ -1,29 +1,43 @@
+// Need to learn how to hide things. Put everything you want into HTML, and then unhide them. Class selector for hidden (questions, high score). 
+// Use querySelector to unhide these. Hidden and dislay:none
+// Only have text in the start screen, but everyrhing should be empty to add it dynamically. 
+// All new pages. 
+// Questions array, with objects with the question and the answer. 
+
+// You only want to loop through this once. Maybe creating a global variable to count. 
+// create a varaible that stores the user's answer to reference back 
+//Go through array, create whichever it is, then save which number it is. So when they click on it. You're storing users's answers //
+
+
 //TIME
 // A. Initiate/Start Button
 // I. Event Listener with an actual HTML button 'on click'
-// II. Event starts timer and hide
+// II. 
+// III.
 // B. The Quiz Itself
+// I.
+// II. 
+// III.
 // C. End of quiz/record highscore
-// I. New game and clear highscores question
+// I.
+// II.
+// III.
 
 
-// Call the DOM
+
 var startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
 var timerEl = document.querySelector("#timer");
 var introEl = document.querySelector("#introContainer");
 var questionContainerEl = document.querySelector("#questionContainer");
 var questionEl = document.querySelector("#question"); 
-// var actionEl = document.querySelector("#action")
+var actionEl = document.querySelector("#action")
 var answerbtnEl = document.querySelectorAll(".answer-btn");
 var judgeEl = document.querySelector("#judge");
-var alldoneEl = document.querySelector("#alldoneContainer");
-var finalscoreEl = document.querySelector("#final-score")
-var gameoverEl = document.querySelector("#gameoverContainer");
-var tryagainEl = document.querySelector("#tryagain-btn").addEventListener("click", tryAgain);
 
+var timeInterval;
 var currentQuestionIndex = 0;
+var quizComplete = false;
 
-// Question Array
 var questionsArr = [
     {
         question: "What does 'HTML' stand for?",
@@ -108,7 +122,7 @@ var questionsArr = [
     }
 ]
 
-//Function to set and start the timer. 
+//Function to start the quiz. This should hide the intro container, add 75 seconds to the time and start the countdown and bring up the first question and set of answers. 
 var timeLeft = 75;
 
 function setTimer() {
@@ -118,32 +132,14 @@ function setTimer() {
     timeLeft--;
     console.log(timeLeft);
     
-    if (timeLeft <= -1) {
+    if (timeLeft === 0) {
         //Function to open up the Highscores page
         timeLeft = 0;
         clearInterval(timeInterval);
-        gameOver();
-        
     }   
     }, 1000);
 }
 
-currentQuestionIndex = 0;
-
-//Function to dynamically populate the question content into hidden div. 
-function setQuestion() {
-    judgeEl.classList.add("hide");
-
-    for (let i = 0; i < questionsArr.length; i++) {
-        questionEl.textContent = questionsArr[currentQuestionIndex].question;
-
-        for(let j = 0; j < questionsArr[currentQuestionIndex].answers.length; j++) {
-        answerbtnEl[j].value = questionsArr[currentQuestionIndex].answers[j];
-        answerbtnEl[j].textContent = questionsArr[currentQuestionIndex].answers[j];
-        }
-    }
-}
-// Function which starts the quiz, start the timer and brings up the first set of questions. Hides the introduction container and unhides the question container. 
 
 function startQuiz() {
     
@@ -157,67 +153,60 @@ function startQuiz() {
     
 }
 
-// Function to assess if we've cycled through all of the questions. 
 
-function quizDone() {
-    if (currentQuestionIndex < questionsArr.length) {
-        setTimeout(setQuestion,1000);
-    }
-    else{
-        questionContainerEl.classList.add("hide");
-        alldoneEl.classList.remove("hide");
+//Try renaming your buttons to have the same name, query selector all, and then turning that into an array too append to - https://www.youtube.com/watch?v=hDN5IGUv3Yw - 7:58. Create a question index variable to count the question and then create a formula that listens for button clicks, throws up the coorrect or wrong, and changes the content of the question. 
 
+currentQuestionIndex = 0;
+
+function setQuestion() {
+    //Populating question
+    for (let i = 0; i < questionsArr.length; i++) {
+        questionEl.textContent = questionsArr[currentQuestionIndex].question;
+
+        for(let j = 0; j < questionsArr[currentQuestionIndex].answers.length; j++) {
+        answerbtnEl[j].textContent = questionsArr[currentQuestionIndex].answers[j];
+        }
     }
-    // else {
-    // setTimeout(changePage,1000);
-    // }
 }
 
+//Need to get rid of the jQuery
 
+// $(answerbtnEl).click(selectAnswer)
 
 answerbtnEl[0].addEventListener("click", selectAnswer);
-answerbtnEl[1].addEventListener("click", selectAnswer);
-answerbtnEl[2].addEventListener("click", selectAnswer);
-answerbtnEl[3].addEventListener("click", selectAnswer);
-
-// Function to change the page. 
-
-function changePage() {
-    window.location.href = "highscore.html";
-}
-
-// Function to evaluate the user's answers. 
 
 function selectAnswer(event) {
-    console.log(event.target.value);
-
-    if (event.target.value === questionsArr[currentQuestionIndex].correct) {
-        currentQuestionIndex++;
+    console.log(event);
+    if ($(event.target).text() === questionsArr[currentQuestionIndex].correct) {
         console.log("correct");
-        console.log(currentQuestionIndex);
         judgeEl.textContent = "CORRECT!";
         judgeEl.classList.remove("hide");
-        quizDone();
+        //Figure out a way to add the thematic break or line break.
     }
-    else {
-        currentQuestionIndex++;
-        timeLeft = timeLeft - 10;
-        console.log("incorrect");
-        judgeEl.textContent = "WRONG!";
-        judgeEl.classList.remove("hide");
-        quizDone();
-    }
-
 }
 
-function gameOver() {
-    questionContainerEl.classList.add("hide");
-    gameoverEl.classList.remove("hide");
-    alldoneEl.classList.add("hide");
-}
+// var currentQuestion = 0; //Which question is it. 
 
-function tryAgain() {
-    window.location.reload();
+// for (let i= 0; i < questionsArr.length; i++) {
 
-}
+//     //dynamically add questions to questions div
+//     questionsArr[i].question; // Store which question it is somewhere. By having a global variable?
+
+//     //dynamically add answers to answers div
+
+//     for (let j= 0; j < questionsArr[i].answers.length; j++) {
+//         //Create them dynamically and then append them
+//     }
+// }
+// //When user clicks on button. 
+
+// questionsArr[i].answers[j]
+
+
+// You only want to loop through this once. Maybe creating a global variable to count. 
+// create a varaible that stores the user's answer to reference back 
+//Go through array, create whichever it is, then save which number it is. So when they click on it. You're storing users's answers
+
+
+
 

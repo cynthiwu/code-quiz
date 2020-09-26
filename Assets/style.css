@@ -44,5 +44,9 @@ h2 {
     margin-top: 50px;
     font-size: 20px;
     color: #E5E3E3;
-    text-decoration: underline;
+}
+
+#initials {
+    margin-left: 6px;
+    margin-right: 6px;
 }
