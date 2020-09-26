@@ -9,14 +9,33 @@
 //Go through array, create whichever it is, then save which number it is. So when they click on it. You're storing users's answers //
 
 
+//TIME
+// A. Initiate/Start Button
+// I. Event Listener with an actual HTML button 'on click'
+// II. 
+// III.
+// B. The Quiz Itself
+// I.
+// II. 
+// III.
+// C. End of quiz/record highscore
+// I.
+// II.
+// III.
+
+
+
 var startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
 //Click registering in window and not on button. 
 var timerEl = document.querySelector("#timer");
 var introEl = document.querySelector("#introContainer");
 var questionContainerEl = document.querySelector("#questionContainer");
 var questionEl = document.querySelector("#question"); 
+var actionEl = document.querySelector("#action")
 var answerbtnEl = document.querySelectorAll(".answer-btn");
+var judgeEl = document.querySelector("#judge");
 
+var timeInterval;
 var currentQuestionIndex = 0;
 var quizComplete = false;
 
@@ -105,11 +124,11 @@ var questionsArr = [
 ]
 
 //Function to start the quiz. This should hide the intro container, add 75 seconds to the time and start the countdown and bring up the first question and set of answers. 
+var timeLeft = 75;
 
 function setTimer() {
-    var timeLeft = 75;
 
-    var timeInterval = setInterval(function() {
+    timeInterval = setInterval(function() {
     timerEl.textContent = timeLeft;
     timeLeft--;
     console.log(timeLeft);
@@ -130,8 +149,9 @@ function startQuiz() {
     setTimer();
 
     introEl.classList.add("hide");
-    questionContainerEl.classList.remove("hide");
     setQuestion();
+    questionContainerEl.classList.remove("hide");
+    
 }
 
 
@@ -150,11 +170,19 @@ function setQuestion() {
     }
 }
 
-$(answerbtnEl).click(selectAnswer)
+//Need to get rid of the jQuery
+
+// $(answerbtnEl).click(selectAnswer)
+
+answerbtnEl[0].addEventListener("click", selectAnswer);
 
 function selectAnswer(event) {
+    console.log(event);
     if ($(event.target).text() === questionsArr[currentQuestionIndex].correct) {
         console.log("correct");
+        judgeEl.textContent = "CORRECT!";
+        judgeEl.classList.remove("hide");
+        //Figure out a way to add the thematic break or line break.
     }
 }
 
@@ -179,7 +207,6 @@ function selectAnswer(event) {
 // You only want to loop through this once. Maybe creating a global variable to count. 
 // create a varaible that stores the user's answer to reference back 
 //Go through array, create whichever it is, then save which number it is. So when they click on it. You're storing users's answers
-
 
 
 
