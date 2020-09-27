@@ -1,32 +1,26 @@
-//TIME
-// A. Initiate/Start Button
-// I. Event Listener with an actual HTML button 'on click'
-// II. Event starts timer and hide
-// B. The Quiz Itself
-// C. End of quiz/record highscore
-// I. New game and clear highscores question
 
-    //Your entire JS code here
 // Call the DOM
-var startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
-var timerEl = document.querySelector("#timer");
-var introEl = document.querySelector("#introContainer");
-var questionContainerEl = document.querySelector("#questionContainer");
-var questionEl = document.querySelector("#question"); 
-var answerbtnEl = document.querySelectorAll(".answer-btn");
-var judgeEl = document.querySelector("#judge");
-var alldoneEl = document.querySelector("#alldoneContainer");
-var finalscoreEl = document.querySelector("#final-score")
-var gameoverEl = document.querySelector("#gameoverContainer");
-var tryagainEl = document.querySelector("#tryagain-btn").addEventListener("click", tryAgain);
-var inputEl = document.querySelector("#initials");
-var submmitEl = document.querySelector("#submit-btn").addEventListener("click", formSubmit);
+
+const startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
+const timerEl = document.querySelector("#timer");
+const introEl = document.querySelector("#introContainer");
+const questionContainerEl = document.querySelector("#questionContainer");
+const questionEl = document.querySelector("#question"); 
+const answerbtnEl = document.querySelectorAll(".answer-btn");
+const judgeEl = document.querySelector("#judge");
+const alldoneEl = document.querySelector("#alldoneContainer");
+const finalscoreEl = document.querySelector("#final-score")
+const gameoverEl = document.querySelector("#gameoverContainer");
+const tryagainEl = document.querySelector("#tryagain-btn").addEventListener("click", tryAgain);
+const inputEl = document.querySelector("#initials");
+const submmitEl = document.querySelector("#submit-btn").addEventListener("click", formSubmit);
 
 
-var currentQuestionIndex = 0;
-var gameFinished = false;
+let currentQuestionIndex = 0;
+let gameFinished = false;
 
-// Question Array
+// Questions array
+
 const questionsArr = [
     {
         question: "What does 'HTML' stand for?",
@@ -111,32 +105,45 @@ const questionsArr = [
     }
 ]
 
-//Function to set and start the timer. 
-var timeLeft = 75;
-var timeInterval;
+
+// Function which starts the quiz, start the timer and populate the first sets of questions. Hides the introduction container and reveals the question container. 
+
+function startQuiz() {
+    
+    console.log("Started");
+    setTimer();
+    introEl.classList.add("hide");
+    setQuestion();
+    questionContainerEl.classList.remove("hide");
+}
+
+
+// Function to set and start and set the timer
+
+let timeLeft = 75;
+let timeInterval;
 
 function setTimer() {
 
     timeInterval = setInterval(function() {
-    timerEl.textContent = timeLeft;
-    timeLeft--;
-    console.log(timeLeft);
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+        console.log(timeLeft);
     
-    if (timeLeft <= -1) {
-        //Function to open up the Highscores page
-        clearInterval(timeInterval);
-        gameOver();
-    }  
-
-    else if (gameFinished === true) {
-        clearInterval(timeInterval);
-        quizDone();
-    }
-
+        if (timeLeft <= -1) {
+            clearInterval(timeInterval);
+            gameOver();
+        }  
+        else if (gameFinished === true) {
+            clearInterval(timeInterval);
+            quizDone();
+        }
     }, 1000);
 }
 
-//Function to dynamically populate the question content into hidden div. 
+//Function to dynamically populate the question content into the question container 
+
+
 function setQuestion() {
     judgeEl.classList.add("hide");
 
@@ -149,19 +156,7 @@ function setQuestion() {
         }
     }
 }
-// Function which starts the quiz, start the timer and brings up the first set of questions. Hides the introduction container and unhides the question container. 
 
-function startQuiz() {
-    
-    console.log("Started");
-    
-    setTimer();
-
-    introEl.classList.add("hide");
-    setQuestion();
-    questionContainerEl.classList.remove("hide");
-    
-}
 
 // Function to assess if we've cycled through all of the questions. 
 
@@ -179,13 +174,19 @@ function quizDone() {
     }
 }
 
-answerbtnEl[0].addEventListener("click", selectAnswer);
-answerbtnEl[1].addEventListener("click", selectAnswer);
-answerbtnEl[2].addEventListener("click", selectAnswer);
-answerbtnEl[3].addEventListener("click", selectAnswer);
+// Can I do this another way that isn't so repetitive?
+
+for (let i = 0; i < answerbtnEl.length; i++) {
+    answerbtnEl[i].addEventListener("click", selectAnswer);
+}
+
+// answerbtnEl[0].addEventListener("click", selectAnswer);
+// answerbtnEl[1].addEventListener("click", selectAnswer);
+// answerbtnEl[2].addEventListener("click", selectAnswer);
+// answerbtnEl[3].addEventListener("click", selectAnswer);
 
 
-// Function to evaluate the user's answers. 
+// Function to evaluate the user's answers 
 
 function selectAnswer(event) {
     console.log(event.target.value);
@@ -193,7 +194,6 @@ function selectAnswer(event) {
     if (event.target.value === questionsArr[currentQuestionIndex].correct) {
         currentQuestionIndex++;
         console.log("correct");
-        console.log(currentQuestionIndex);
         judgeEl.textContent = "CORRECT!";
         judgeEl.classList.remove("hide");
         quizDone();
@@ -219,13 +219,12 @@ function gameOver() {
 
 function tryAgain() {
     location.replace("codequiz.html");
-
 }
 
+// Recording and storing form data for use with highscore page. 
 
-var userInitials = JSON.parse(localStorage.getItem("Initials")) || [];
-var userTime = JSON.parse(localStorage.getItem("User Time")) || [];
-
+let userInitials = JSON.parse(localStorage.getItem("Initials")) || [];
+let userTime = JSON.parse(localStorage.getItem("User Time")) || [];
 
 function formSubmit() {
 
@@ -242,10 +241,6 @@ function formSubmit() {
     console.log(userInitials);
     console.log(userTime);
     inputEl.value = "";
-
-    // userInitials.forEach((key, i) => userData[key] = userTime[i]);
-    // console.log(userData);
-    // localStorage.setItem("User Data", JSON.stringify(userData));
 
 }
 

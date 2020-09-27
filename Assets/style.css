@@ -1,11 +1,5 @@
 *, *::before, *::after {
     box-sizing: border-box;
-    /* font-family: */
-}
-
-body {
-    padding: 10%;
-    margin-top: 60px;
 }
 
 section {
@@ -13,12 +7,17 @@ section {
     padding:0;
 }
 
-h1 {
-    margin-bottom: 25px;
-}
-
 h2 {
     margin-bottom: 50px;
+}
+
+.body-style {
+    padding: 10%;
+    margin-top: 90px;
+}
+
+.header {
+    margin-bottom: 30px;
 }
 
 .hide {
@@ -43,10 +42,17 @@ h2 {
 #judge {
     margin-top: 50px;
     font-size: 20px;
-    color: #E5E3E3;
+    color: #8B8787;
 }
 
 #initials {
     margin-left: 6px;
     margin-right: 6px;
+}
+
+#player-scores {
+    background-color: #E3F6F6;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    align-items: left;
 }
