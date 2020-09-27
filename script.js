@@ -8,7 +8,6 @@
 
     //Your entire JS code here
 // Call the DOM
-var tryagainEl = document.querySelector("#tryagain-btn").addEventListener("click", tryAgain);
 var startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
 var timerEl = document.querySelector("#timer");
 var introEl = document.querySelector("#introContainer");
@@ -19,6 +18,10 @@ var judgeEl = document.querySelector("#judge");
 var alldoneEl = document.querySelector("#alldoneContainer");
 var finalscoreEl = document.querySelector("#final-score")
 var gameoverEl = document.querySelector("#gameoverContainer");
+var tryagainEl = document.querySelector("#tryagain-btn").addEventListener("click", tryAgain);
+var inputEl = document.querySelector("#initials");
+var submmitEl = document.querySelector("#submit-btn").addEventListener("click", formSubmit);
+
 
 var currentQuestionIndex = 0;
 var gameFinished = false;
@@ -164,14 +167,14 @@ function startQuiz() {
 
 function quizDone() {
     if (currentQuestionIndex < questionsArr.length) {
-        setTimeout(setQuestion,1000);
+        setTimeout(setQuestion,500);
     }
     else {
         questionContainerEl.classList.add("hide");
         alldoneEl.classList.remove("hide");
         gameFinished = true;
-        finalscoreEl.textContent = timeLeft;
         timerEl.textContent = timeLeft;
+        finalscoreEl.textContent = timeLeft;
         // There is  a lag with this. Should I push the time left into an array in my interval function and then retrive that here? 
     }
 }
@@ -181,11 +184,6 @@ answerbtnEl[1].addEventListener("click", selectAnswer);
 answerbtnEl[2].addEventListener("click", selectAnswer);
 answerbtnEl[3].addEventListener("click", selectAnswer);
 
-// Function to change the page. 
-
-function changePage() {
-    window.location.href = "highscore.html";
-}
 
 // Function to evaluate the user's answers. 
 
@@ -222,7 +220,37 @@ function gameOver() {
 function tryAgain() {
     location.replace("codequiz.html");
 
+}
+
+
+var userInitials = JSON.parse(localStorage.getItem("Initials")) || [];
+var userTime = JSON.parse(localStorage.getItem("User Time")) || [];
+
+
+function formSubmit() {
+
+    location.replace("highscore.html");
+    console.log(timeLeft);
+    console.log(inputEl.value);
+    
+    userInitials.push(inputEl.value);
+    userTime.push(timeLeft);
+
+    localStorage.setItem("Initials", JSON.stringify(userInitials));
+    localStorage.setItem("User Time", JSON.stringify(userTime));
+
+    console.log(userInitials);
+    console.log(userTime);
+    inputEl.value = "";
+
+    // userInitials.forEach((key, i) => userData[key] = userTime[i]);
+    // console.log(userData);
+    // localStorage.setItem("User Data", JSON.stringify(userData));
 
 }
+
+
+
+
 
 
