@@ -180,12 +180,6 @@ for (let i = 0; i < answerbtnEl.length; i++) {
     answerbtnEl[i].addEventListener("click", selectAnswer);
 }
 
-// answerbtnEl[0].addEventListener("click", selectAnswer);
-// answerbtnEl[1].addEventListener("click", selectAnswer);
-// answerbtnEl[2].addEventListener("click", selectAnswer);
-// answerbtnEl[3].addEventListener("click", selectAnswer);
-
-
 // Function to evaluate the user's answers 
 
 function selectAnswer(event) {
