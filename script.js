@@ -221,7 +221,10 @@ let userInitials = JSON.parse(localStorage.getItem("Initials")) || [];
 let userTime = JSON.parse(localStorage.getItem("User Time")) || [];
 
 function formSubmit() {
-
+    if (inputEl.value === "") {
+        alert("Invalid entry. Please enter your intials.")
+    }
+    else {
     location.replace("Pages/highscore.html");
     console.log(timeLeft);
     console.log(inputEl.value);
@@ -235,7 +238,7 @@ function formSubmit() {
     console.log(userInitials);
     console.log(userTime);
     inputEl.value = "";
-
+    }
 }
 
 
