@@ -212,7 +212,7 @@ function gameOver() {
 // Function to reset to code quiz. Not sure if this is the best way to do this. 
 
 function tryAgain() {
-    location.replace("codequiz.html");
+    location.replace("index.html");
 }
 
 // Recording and storing form data for use with highscore page. 
