@@ -222,7 +222,7 @@ let userTime = JSON.parse(localStorage.getItem("User Time")) || [];
 
 function formSubmit() {
 
-    location.replace("highscore.html");
+    location.replace("Pages/highscore.html");
     console.log(timeLeft);
     console.log(inputEl.value);
     

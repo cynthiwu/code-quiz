@@ -19,7 +19,7 @@ for (let i = 0; i < userInitials.length; i++) {
 }
 
 function tryAgain2() {
-    location.replace("codequiz.html");
+    location.replace("../codequiz.html");
 }
 
 // Function to clear scores and remove all child nodes, using function below. 
