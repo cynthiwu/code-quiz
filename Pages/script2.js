@@ -3,18 +3,23 @@ const scoresEl = document.querySelector("#player-scores");
 const clearEl = document.querySelector("#clear-btn").addEventListener("click", clearScore);
 
 // Retrieved local storage data for highscore table
-let userInitials = JSON.parse(localStorage.getItem("Initials"));
-let userTime = JSON.parse(localStorage.getItem("User Time"));
+let userData = JSON.parse(localStorage.getItem("userData"));
 
-console.log(userInitials);
-console.log(userTime);
+console.log(userData);
+
 
 // Loop to populate highscore table with user data. 
 
-for (let i = 0; i < userInitials.length; i++) {
+userData.sort( 
+    function (a, b) {
+        return b.time - a.time;
+    }
+)
+
+for (let i = 0; i < userData.length; i++) {
     let listItem = document.createElement("LI");
     scoresEl.appendChild(listItem);
-    listItem.textContent = userInitials[i] + " - " + userTime[i];
+    listItem.textContent = userData[i].name + " - " + userData[i].time;
 
 }
 

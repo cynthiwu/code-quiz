@@ -1,6 +1,7 @@
 # A Simple Code Quiz
 
 Explore the [project page](https://github.com/cynthiwu/code-quiz)
+
 View it live on [github-pages](https://cynthiwu.github.io/code-quiz/)
 
 ## Table of Contents

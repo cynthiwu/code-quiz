@@ -106,6 +106,7 @@ const questionsArr = [
 ]
 
 
+
 // Function which starts the quiz, start the timer and populate the first sets of questions. Hides the introduction container and reveals the question container. 
 
 function startQuiz() {
@@ -113,8 +114,14 @@ function startQuiz() {
     console.log("Started");
     setTimer();
     introEl.classList.add("hide");
+
+    for (let i = 0; i < answerbtnEl.length; i++) {
+        answerbtnEl[i].addEventListener("click", selectAnswer);
+    }
+    
     setQuestion();
     questionContainerEl.classList.remove("hide");
+    
 }
 
 
@@ -124,13 +131,15 @@ let timeLeft = 75;
 let timeInterval;
 
 function setTimer() {
+    timerEl.textContent = timeLeft;
 
     timeInterval = setInterval(function() {
-        timerEl.textContent = timeLeft;
+        
         timeLeft--;
+        timerEl.textContent = timeLeft;
         console.log(timeLeft);
     
-        if (timeLeft <= -1) {
+        if (timeLeft <= 0) {
             clearInterval(timeInterval);
             gameOver();
         }  
@@ -146,14 +155,11 @@ function setTimer() {
 
 function setQuestion() {
     judgeEl.classList.add("hide");
+    questionEl.textContent = questionsArr[currentQuestionIndex].question;
 
-    for (let i = 0; i < questionsArr.length; i++) {
-        questionEl.textContent = questionsArr[currentQuestionIndex].question;
-
-        for (let j = 0; j < questionsArr[currentQuestionIndex].answers.length; j++) {
+    for (let j = 0; j < questionsArr[currentQuestionIndex].answers.length; j++) {
         answerbtnEl[j].value = questionsArr[currentQuestionIndex].answers[j];
         answerbtnEl[j].textContent = questionsArr[currentQuestionIndex].answers[j];
-        }
     }
 }
 
@@ -172,12 +178,6 @@ function quizDone() {
         finalscoreEl.textContent = timeLeft;
         // There is  a lag with this. Should I push the time left into an array in my interval function and then retrive that here? 
     }
-}
-
-// Can I do this another way that isn't so repetitive?
-
-for (let i = 0; i < answerbtnEl.length; i++) {
-    answerbtnEl[i].addEventListener("click", selectAnswer);
 }
 
 // Function to evaluate the user's answers 
@@ -217,8 +217,8 @@ function tryAgain() {
 
 // Recording and storing form data for use with highscore page. 
 
-let userInitials = JSON.parse(localStorage.getItem("Initials")) || [];
-let userTime = JSON.parse(localStorage.getItem("User Time")) || [];
+let userData = JSON.parse(localStorage.getItem("userData")) || [];
+// let userTime = JSON.parse(localStorage.getItem("User Time")) || [];
 
 function formSubmit() {
     if (inputEl.value === "") {
@@ -229,13 +229,11 @@ function formSubmit() {
     console.log(timeLeft);
     console.log(inputEl.value);
     
-    userInitials.push(inputEl.value);
-    userTime.push(timeLeft);
+    userData.push({name: inputEl.value, time: timeLeft});
+    
+    localStorage.setItem("userData", JSON.stringify(userData));
 
-    localStorage.setItem("Initials", JSON.stringify(userInitials));
-    localStorage.setItem("User Time", JSON.stringify(userTime));
-
-    console.log(userInitials);
+    console.log(userData);
     console.log(userTime);
     inputEl.value = "";
     }
