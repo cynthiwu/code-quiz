@@ -1,6 +1,6 @@
-const tryagainEl2 = document.querySelector("#tryagain-btn2").addEventListener("click", tryAgain2);
+const tryagainEl2 = document.querySelector("#tryagain-btn2");
 const scoresEl = document.querySelector("#player-scores");
-const clearEl = document.querySelector("#clear-btn").addEventListener("click", clearScore);
+const clearEl = document.querySelector("#clear-btn");
 
 // Retrieved local storage data for highscore table
 let userData = JSON.parse(localStorage.getItem("userData"));
@@ -39,3 +39,7 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+
+tryagainEl2.addEventListener("click", tryAgain2);
+clearEl.addEventListener("click", clearScore);

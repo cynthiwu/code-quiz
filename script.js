@@ -1,7 +1,7 @@
 
 // Call the DOM
 
-const startButton = document.querySelector("#start-btn").addEventListener("click", startQuiz);
+const startButton = document.querySelector("#start-btn");
 const timerEl = document.querySelector("#timer");
 const introEl = document.querySelector("#introContainer");
 const questionContainerEl = document.querySelector("#questionContainer");
@@ -11,9 +11,9 @@ const judgeEl = document.querySelector("#judge");
 const alldoneEl = document.querySelector("#alldoneContainer");
 const finalscoreEl = document.querySelector("#final-score")
 const gameoverEl = document.querySelector("#gameoverContainer");
-const tryagainEl = document.querySelector("#tryagain-btn").addEventListener("click", tryAgain);
+const tryagainEl = document.querySelector("#tryagain-btn");
 const inputEl = document.querySelector("#initials");
-const submmitEl = document.querySelector("#submit-btn").addEventListener("click", formSubmit);
+const submitEl = document.querySelector("#submit-btn");
 
 
 let currentQuestionIndex = 0;
@@ -240,7 +240,9 @@ function formSubmit() {
 }
 
 
-
+startButton.addEventListener("click", startQuiz);
+tryagainEl.addEventListener("click", tryAgain);
+submitEl.addEventListener("click", formSubmit)
 
 
 
